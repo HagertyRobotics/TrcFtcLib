@@ -334,6 +334,7 @@ public class FtcVisionTensorFlow
     public TrcVisionTargetInfo<DetectedObject>[] getDetectedTargetsInfo(
         String label, FilterTarget filter, Comparator<? super TrcVisionTargetInfo<DetectedObject>> comparator,
         double objHeightOffset, double cameraHeight)
+    
     {
         TrcVisionTargetInfo<DetectedObject>[] targetsInfo = null;
         // getFreshRecognitions() will return null if no new information is available since the last time that call
