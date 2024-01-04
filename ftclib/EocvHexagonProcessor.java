@@ -50,7 +50,7 @@ public class EocvHexagonProcessor implements TrcOpenCvPipeline<TrcOpenCvDetector
     private final OpenCvHexagonPipeline hexagonPipeline;
     private final Paint linePaint;
     private final Paint textPaint;
-    private boolean annotate = false;
+    private boolean annotate = true;
 
     /**
      * Constructor: Create an instance of the object.
