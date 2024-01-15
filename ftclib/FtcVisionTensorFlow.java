@@ -157,6 +157,7 @@ public class FtcVisionTensorFlow
         boolean modelIsQuantized = true;
         int modelInputSize = 300;
         double modelAspectRatio = 16.0/9.0;
+
         int maxNumRecognitions = 10;
 
         public Parameters setIsModelTensorFlow2(boolean isTensorFlow2)
