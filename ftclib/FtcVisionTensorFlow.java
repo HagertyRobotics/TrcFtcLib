@@ -333,23 +333,23 @@ public class FtcVisionTensorFlow
      * @return filtered target info array.
      */
     public TrcVisionTargetInfo<DetectedObject>[] getDetectedTargetsInfo(
-        String label, FilterTarget filter, Comparator<? super TrcVisionTargetInfo<DetectedObject>> comparator,
-        double objHeightOffset, double cameraHeight)
-    
+            String label, FilterTarget filter, Comparator<? super TrcVisionTargetInfo<DetectedObject>> comparator,
+            double objHeightOffset, double cameraHeight)
     {
         TrcVisionTargetInfo<DetectedObject>[] targetsInfo = null;
+
         // getFreshRecognitions() will return null if no new information is available since the last time that call
         // was made.
         List<Recognition> updatedRecognitions = tensorFlowProcessor.getFreshRecognitions();
 
         if (updatedRecognitions != null)
         {
-            ArrayList<Recognition> targets = new ArrayList<>();
+            ArrayList<TrcVisionTargetInfo<DetectedObject>> targets = new ArrayList<>();
             for (int i = 0; i < updatedRecognitions.size(); i++)
             {
                 Recognition object = updatedRecognitions.get(i);
                 TrcVisionTargetInfo<DetectedObject> objInfo =
-                    getDetectedTargetInfo(object, objHeightOffset, cameraHeight);
+                        getDetectedTargetInfo(object, objHeightOffset, cameraHeight);
                 boolean foundIt = label == null || label.equals(object.getLabel());
                 boolean rejected = false;
 
@@ -357,7 +357,7 @@ public class FtcVisionTensorFlow
                 {
                     if (filter == null || filter.validateTarget(objInfo))
                     {
-                        targets.add(object);
+                        targets.add(objInfo);
                     }
                     else
                     {
@@ -378,9 +378,16 @@ public class FtcVisionTensorFlow
                 }
             }
         }
+        else
+        {
+            // Handle the case when updatedRecognitions is null
+            tracer.traceDebug(instanceName, "No new recognitions available.");
+        }
 
         return targetsInfo;
     }   //getDetectedTargetsInfo
+
+
 
     /**
      * This method returns the target info of the best detected target.
